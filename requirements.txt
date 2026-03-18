@@ -1,0 +1,8 @@
+alpaca-trade-api
+pandas
+pandas_ta
+python-dotenv
+langchain
+langgraph
+openai
+stable-baselines3[extra]
