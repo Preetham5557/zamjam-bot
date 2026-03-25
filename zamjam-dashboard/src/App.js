@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 export default function CommandCenter() {
-  // Replace this initial state with your actual Supabase data fetch hook
+  // Currently using static logs to test the UI. You will swap this with your Supabase fetch later.
   const [logs, setLogs] = useState([
     { id: 1, timestamp: "11:24:18 PM", message: "[BTC/USD] SELL - Live Order Executed: Sold 0.001 BTC/USD. PnL: $2.50" },
     { id: 2, timestamp: "11:23:26 PM", message: "[BTC/USD] BUY - Live Order Executed: Bought 0.001 BTC/USD at $70456.20" },
@@ -9,7 +9,6 @@ export default function CommandCenter() {
   ]);
 
   // --- THE QUANT HUD LOGIC ---
-  // We useMemo to recalculate stats instantly whenever a new log arrives
   const stats = useMemo(() => {
     let totalPnl = 0;
     let currentPosition = "FLAT";
@@ -17,12 +16,10 @@ export default function CommandCenter() {
 
     logs.forEach(log => {
       const msg = log.message;
-      // Extract PnL
       if (msg.includes("PnL: $")) {
         const pnlMatch = msg.match(/PnL:\s*\$([-\d.]+)/);
         if (pnlMatch) totalPnl += parseFloat(pnlMatch[1]);
       }
-      // Extract Position Size & Price
       if (msg.includes("BUY") && currentPosition === "FLAT") {
         currentPosition = "LONG (0.001 BTC)";
         const priceMatch = msg.match(/at\s*\$([\d.]+)/);
@@ -39,9 +36,9 @@ export default function CommandCenter() {
   const getLogColor = (message) => {
     if (message.includes("BUY")) return "text-green-400 font-bold";
     if (message.includes("SELL")) return "text-red-400 font-bold";
-    if (message.includes("HOLD") && message.includes("Agent Action: 1")) return "text-green-200/50"; // Weak buy signal
-    if (message.includes("HOLD") && message.includes("Agent Action: 2")) return "text-red-200/50";  // Weak sell signal
-    return "text-blue-300"; // Default Hold/Populate
+    if (message.includes("HOLD") && message.includes("Agent Action: 1")) return "text-green-200/50";
+    if (message.includes("HOLD") && message.includes("Agent Action: 2")) return "text-red-200/50";
+    return "text-blue-300";
   };
 
   return (

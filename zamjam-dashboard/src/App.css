@@ -9,15 +9,15 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5); /* Deep slate to match the background */
+  background: rgba(15, 23, 42, 0.5); 
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.8); /* Lighter slate for the thumb */
+  background: rgba(51, 65, 85, 0.8); 
   border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 1); /* Highlights when you hover */
+  background: rgba(71, 85, 105, 1); 
 }
