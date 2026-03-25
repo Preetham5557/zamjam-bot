@@ -45,7 +45,10 @@ def get_latest_price(symbol: str) -> float:
         data = response.json()
         return data["trades"][symbol]["p"]
     except Exception as e:
-        print(f"Error fetching data for {symbol}: {e}")
+        error_msg = f"Data Fetch Error for {symbol}: {e}"
+        print(error_msg)
+        # 🚨 THE NEW TWEAK: Send the error straight to your Vercel dashboard
+        db.log_action(error_msg, "BEARISH") 
         return 0.0
 
 # --- THE MAIN BRAIN ---
